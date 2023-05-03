@@ -1,10 +1,15 @@
-# Paschalis Ilias
-# ipaschalis2002@gmail.com
-# Co programers:
-# Ralousis Anastasios
-# Giarmantzis Ephstratios
-# CircuitPython
 # Line follower
+# 	Version 1.0.0
+# For Maker Pi RP2040 running CircuitPython
+
+# MIT license
+
+# Programmers:
+# 	Paschalis Ilias
+#		ipaschalis2002@gmail.com
+# 	Ralousis Anastasios
+# 	Giarmantzis Ephstratios
+
 
 import board
 import digitalio
