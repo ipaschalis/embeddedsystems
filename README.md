@@ -17,5 +17,7 @@
 # Εξαρτήματα:
 
 Maker Pi RP2040 board
+
 Robotics Kit
+
 x2 IR sensors
