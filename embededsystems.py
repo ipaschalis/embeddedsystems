@@ -34,12 +34,6 @@ motorR = motor.DCMotor(mR1, mR2)
 right_ir = digitalio.DigitalInOut(board.GP4)
 left_ir = digitalio.DigitalInOut(board.GP6)
 
-# Initialize Neopixel RGB LEDs
-pixels = neopixel.NeoPixel(board.GP18, 2)
-pixels.fill(0)
-color = 0
-state = 0
-
 # Αλλάζει την ταχύτητα των κινητήρων
 # Δέχεται από -1 έως 1, πχ 0.5
 def moveM(LThro, RThro):
