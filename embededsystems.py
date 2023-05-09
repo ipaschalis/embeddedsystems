@@ -1,10 +1,10 @@
 # Line follower
-# 	Version 1.0.0
+# 	Version 1.0.2 Mar 5 2023
 # For Maker Pi RP2040 running CircuitPython
 
 # MIT license
 
-# Programmers:
+# Copyright (c) 2023:
 # 	Paschalis Ilias
 #		ipaschalis2002@gmail.com
 # 	Ralousis Anastasios
@@ -14,7 +14,6 @@
 import board
 import digitalio
 import simpleio
-import neopixel
 import time
 import pwmio
 from adafruit_motor import motor
@@ -34,11 +33,40 @@ motorR = motor.DCMotor(mR1, mR2)
 right_ir = digitalio.DigitalInOut(board.GP4)
 left_ir = digitalio.DigitalInOut(board.GP6)
 
-# Initialize Neopixel RGB LEDs
-pixels = neopixel.NeoPixel(board.GP18, 2)
-pixels.fill(0)
-color = 0
-state = 0
+# initialize onboard gpio leds
+LED_PINS = [board.GP0, 
+            board.GP1,
+            board.GP2,
+            board.GP3,
+            board.GP5,
+            board.GP7,
+            board.GP16,
+            board.GP17,
+            board.GP26,
+            board.GP27,
+            board.GP28]
+
+LEDS = []
+
+for pin in LED_PINS:
+    # Set pins as digital output
+    digout = digitalio.DigitalInOut(pin)
+    digout.direction = digitalio.Direction.OUTPUT
+    LEDS.append(digout)
+
+
+# LED εφε
+def ledscan(led_status, counter):
+    if counter == 2:
+        LEDS.reverse()
+    for i in range(len(LEDS)):
+        LEDS[i].value = led_status
+        time.sleep(0.01)
+    counter += 1
+    if counter == 4:
+        counter = 0
+        LEDS.reverse()
+    return not led_status, counter
 
 # Αλλάζει την ταχύτητα των κινητήρων
 # Δέχεται από -1 έως 1, πχ 0.5
@@ -50,33 +78,55 @@ def mForward():
     moveM(0.30, 0.30)
     
 def mBack():
-    moveM(-0.30, -0.30)
-    
+    moveM(-0.25, -0.25)
+      
 def mBreak():
     moveM(0, 0)
     
 def turnRight():
-    moveM(0, 0.25)
+    mBack()
+    time.sleep(0.15)
+    moveM(0, 0.20)
+    time.sleep(0.2)
+    mBreak()
+    time.sleep(0.2)
     
 def turnLeft():
-    moveM(0.25, 0)
-    
+    mBack()
+    time.sleep(0.15)
+    moveM(0.20, 0)
+    time.sleep(0.2)
+    mBreak()
+    time.sleep(0.2)
+
+led_status = False
+counter = 0
+
 if __name__ == "__main__":
     mBreak()
     time.sleep(1)
 
     while True:
-        time.sleep(0.1)
+        # Εφε
+        led_status, counter = ledscan(led_status, counter)
+        
+        # Παύση για πιο ομαλή λειτουργιά
+        # time.sleep(0.1) Η παύση γίνεται πλέον από τα leds
+        
+        # Διάβασμα αισθητήρων 
         r_ir = right_ir.value
         l_ir = left_ir.value
         
         if not r_ir and not l_ir: # αν δεν βλέπει την γραμμή ξεκινάει
             mForward()
+            time.sleep(0.1)
+            mBreak()
+            
         elif r_ir and l_ir: # αν βλέπει την γραμμή και από τους δυο αισθητήρες κάνει πίσω και σταματάει   
             mBack()
             time.sleep(0.2)
             mBreak()
-            time.sleep(1)
+            time.sleep(0.5)
         elif not r_ir and l_ir: # αν βλέπει την γραμμή από έναν αισθητήρα γυρνάει  
             turnRight()
         elif r_ir and not l_ir:
