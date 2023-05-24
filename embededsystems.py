@@ -33,40 +33,6 @@ motorR = motor.DCMotor(mR1, mR2)
 right_ir = digitalio.DigitalInOut(board.GP4)
 left_ir = digitalio.DigitalInOut(board.GP6)
 
-# initialize onboard gpio leds
-LED_PINS = [board.GP0, 
-            board.GP1,
-            board.GP2,
-            board.GP3,
-            board.GP5,
-            board.GP7,
-            board.GP16,
-            board.GP17,
-            board.GP26,
-            board.GP27,
-            board.GP28]
-
-LEDS = []
-
-for pin in LED_PINS:
-    # Set pins as digital output
-    digout = digitalio.DigitalInOut(pin)
-    digout.direction = digitalio.Direction.OUTPUT
-    LEDS.append(digout)
-
-
-# LED εφε
-def ledscan(led_status, counter):
-    if counter == 2:
-        LEDS.reverse()
-    for i in range(len(LEDS)):
-        LEDS[i].value = led_status
-        time.sleep(0.01)
-    counter += 1
-    if counter == 4:
-        counter = 0
-        LEDS.reverse()
-    return not led_status, counter
 
 # Αλλάζει την ταχύτητα των κινητήρων
 # Δέχεται από -1 έως 1, πχ 0.5
@@ -108,10 +74,9 @@ if __name__ == "__main__":
 
     while True:
         # Εφε
-        led_status, counter = ledscan(led_status, counter)
         
         # Παύση για πιο ομαλή λειτουργιά
-        # time.sleep(0.1) Η παύση γίνεται πλέον από τα leds
+        time.sleep(0.1) Η παύση γίνεται πλέον από τα leds
         
         # Διάβασμα αισθητήρων 
         r_ir = right_ir.value
@@ -126,7 +91,7 @@ if __name__ == "__main__":
             mBack()
             time.sleep(0.2)
             mBreak()
-            time.sleep(0.5)
+            time.sleep(0.1)
         elif not r_ir and l_ir: # αν βλέπει την γραμμή από έναν αισθητήρα γυρνάει  
             turnRight()
         elif r_ir and not l_ir:
