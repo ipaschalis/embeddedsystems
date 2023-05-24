@@ -84,8 +84,8 @@ if __name__ == "__main__":
         
         if not r_ir and not l_ir: # αν δεν βλέπει την γραμμή ξεκινάει
             mForward()
-            time.sleep(0.1)
-            mBreak()
+            #time.sleep(0.1)
+            #mBreak()
             
         elif r_ir and l_ir: # αν βλέπει την γραμμή και από τους δυο αισθητήρες κάνει πίσω και σταματάει   
             mBack()
