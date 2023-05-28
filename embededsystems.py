@@ -51,32 +51,28 @@ def mBreak():
     
 def turnRight():
     mBack()
-    time.sleep(0.15)
-    moveM(0, 0.20)
-    time.sleep(0.2)
+    time.sleep(0.25)
+    moveM(0, 0.30)
+    time.sleep(0.5)
     mBreak()
-    time.sleep(0.2)
+    time.sleep(0.1)
     
 def turnLeft():
     mBack()
-    time.sleep(0.15)
-    moveM(0.20, 0)
-    time.sleep(0.2)
+    time.sleep(0.25)
+    moveM(0.30, 0)
+    time.sleep(0.5)
     mBreak()
-    time.sleep(0.2)
+    time.sleep(0.1)
 
-led_status = False
-counter = 0
 
 if __name__ == "__main__":
     mBreak()
     time.sleep(1)
 
     while True:
-        # Εφε
-        
         # Παύση για πιο ομαλή λειτουργιά
-        time.sleep(0.1) Η παύση γίνεται πλέον από τα leds
+        time.sleep(0.005) 
         
         # Διάβασμα αισθητήρων 
         r_ir = right_ir.value
@@ -89,9 +85,9 @@ if __name__ == "__main__":
             
         elif r_ir and l_ir: # αν βλέπει την γραμμή και από τους δυο αισθητήρες κάνει πίσω και σταματάει   
             mBack()
-            time.sleep(0.2)
-            mBreak()
             time.sleep(0.1)
+            mBreak()
+            time.sleep(0.05)
         elif not r_ir and l_ir: # αν βλέπει την γραμμή από έναν αισθητήρα γυρνάει  
             turnRight()
         elif r_ir and not l_ir:
