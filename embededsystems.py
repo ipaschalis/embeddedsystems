@@ -41,7 +41,7 @@ def move_m(left_throttle, right_throttle):
 
 
 def move_forward():
-    move_m(0.30, 0.30)
+    move_m(0.60, 0.60)
 
 
 def move_back():
